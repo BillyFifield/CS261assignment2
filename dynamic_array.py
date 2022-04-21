@@ -209,20 +209,21 @@ class DynamicArray:
         """
 
         new_size = self._size + second_da.length()
-        # new_capacity = self._capacity
-        while self._capacity < new_size:
-            self._capacity *= 2
-        # new_arr = StaticArray(new_capacity)
+        new_capacity = self._capacity
+        while new_capacity < new_size:
+            new_capacity *= 2
+        new_arr = StaticArray(new_capacity)
         new_cap = self._capacity
         second_idx = 0
         for idx in range(new_size):
             if idx >= self._size:
                 self._size += 1
-                self._data[idx] = second_da[second_idx]
+                new_arr[idx] = second_da[second_idx]
                 second_idx += 1
-        #     else:
-        #         new_arr[idx] = self._data[idx]
-        # self._data = new_arr
+            else:
+                new_arr[idx] = self._data[idx]
+        self._capacity = new_capacity
+        self._data = new_arr
 
     def map(self, map_func) -> "DynamicArray":
         """
@@ -401,13 +402,13 @@ if __name__ == "__main__":
     #     except:
     #         print(" --- exception occurred.")
     #
-    print("\n# merge example 1")
-    da = DynamicArray([1, 2, 3, 4, 5])
-    da2 = DynamicArray([10, 11, 12, 13])
-    print(da)
-    da.merge(da2)
-    print(da)
-    #
+    # print("\n# merge example 1")
+    # da = DynamicArray([1, 2, 3, 4, 5])
+    # da2 = DynamicArray([10, 11, 12, 13])
+    # print(da)
+    # da.merge(da2)
+    # print(da)
+    # #
     # print("\n# merge example 2")
     # da = DynamicArray([1, 2, 3])
     # da2 = DynamicArray()
