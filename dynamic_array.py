@@ -239,7 +239,12 @@ class DynamicArray:
         """
         TODO: Write this implementation
         """
-        pass
+        new_da = DynamicArray()
+        for idx in range(self._size):
+            if filter_func(self._data[idx]) == True:
+                new_da.append(self._data[idx])
+
+        return new_da
 
     def reduce(self, reduce_func, initializer=None) -> object:
         """
@@ -258,7 +263,7 @@ def find_mode(arr: DynamicArray) -> (DynamicArray, int):
 # ------------------- BASIC TESTING -----------------------------------------
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
     # print("\n# resize - example 1")
     # da = DynamicArray()
@@ -424,34 +429,34 @@ if __name__ == "__main__":
     # da3.merge(da)
     # print(da3)
     #
-    print("\n# map example 1")
-    da = DynamicArray([1, 5, 10, 15, 20, 25])
-    print(da)
-    print(da.map(lambda x: x ** 2))
+    # print("\n# map example 1")
+    # da = DynamicArray([1, 5, 10, 15, 20, 25])
+    # print(da)
+    # print(da.map(lambda x: x ** 2))
+    # #
+    # print("\n# map example 2")
     #
-    print("\n# map example 2")
-
-
-    def double(value):
-        return value * 2
-
-
-    def square(value):
-        return value ** 2
-
-
-    def cube(value):
-        return value ** 3
-
-
-    def plus_one(value):
-        return value + 1
-
-
-    da = DynamicArray([plus_one, double, square, cube])
-    for value in [1, 10, 20]:
-        print(da.map(lambda x: x(value)))
     #
+    # def double(value):
+    #     return value * 2
+    #
+    #
+    # def square(value):
+    #     return value ** 2
+    #
+    #
+    # def cube(value):
+    #     return value ** 3
+    #
+    #
+    # def plus_one(value):
+    #     return value + 1
+    #
+    #
+    # da = DynamicArray([plus_one, double, square, cube])
+    # for value in [1, 10, 20]:
+    #     print(da.map(lambda x: x(value)))
+
     # print("\n# filter example 1")
     #
     #
@@ -464,7 +469,7 @@ if __name__ == "__main__":
     # result = da.filter(filter_a)
     # print(result)
     # print(da.filter(lambda x: (10 <= x <= 20)))
-    #
+    # #
     # print("\n# filter example 2")
     #
     #
