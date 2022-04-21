@@ -205,7 +205,7 @@ class DynamicArray:
 
     def merge(self, second_da: "DynamicArray") -> None:
         """
-        TODO: Write this implementation
+        Merges two arrives by adding second_da to the end of the original array.
         """
 
         new_size = self._size + second_da.length()
@@ -229,7 +229,11 @@ class DynamicArray:
         """
         TODO: Write this implementation
         """
-        pass
+        new_da = DynamicArray()
+        for idx in range(self._size):
+            new_da.append(map_func(self._data[idx]))
+
+        return new_da
 
     def filter(self, filter_func) -> "DynamicArray":
         """
@@ -420,33 +424,33 @@ if __name__ == "__main__":
     # da3.merge(da)
     # print(da3)
     #
-    # print("\n# map example 1")
-    # da = DynamicArray([1, 5, 10, 15, 20, 25])
-    # print(da)
-    # print(da.map(lambda x: x ** 2))
+    print("\n# map example 1")
+    da = DynamicArray([1, 5, 10, 15, 20, 25])
+    print(da)
+    print(da.map(lambda x: x ** 2))
     #
-    # print("\n# map example 2")
-    #
-    #
-    # def double(value):
-    #     return value * 2
-    #
-    #
-    # def square(value):
-    #     return value ** 2
-    #
-    #
-    # def cube(value):
-    #     return value ** 3
-    #
-    #
-    # def plus_one(value):
-    #     return value + 1
-    #
-    #
-    # da = DynamicArray([plus_one, double, square, cube])
-    # for value in [1, 10, 20]:
-    #     print(da.map(lambda x: x(value)))
+    print("\n# map example 2")
+
+
+    def double(value):
+        return value * 2
+
+
+    def square(value):
+        return value ** 2
+
+
+    def cube(value):
+        return value ** 3
+
+
+    def plus_one(value):
+        return value + 1
+
+
+    da = DynamicArray([plus_one, double, square, cube])
+    for value in [1, 10, 20]:
+        print(da.map(lambda x: x(value)))
     #
     # print("\n# filter example 1")
     #
