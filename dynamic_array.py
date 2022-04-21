@@ -189,7 +189,8 @@ class DynamicArray:
 
     def slice(self, start_index: int, size: int) -> "DynamicArray":
         """
-        TODO: Write this implementation
+        Creates a new Dynamic Array using the data starting at the start_index for
+        the length of the entered size.
         """
         if (start_index < 0) or (start_index > (self._size - 1)) or ((start_index + size) > self._size) or (size < 0):
             raise DynamicArrayException
@@ -206,7 +207,22 @@ class DynamicArray:
         """
         TODO: Write this implementation
         """
-        pass
+
+        new_size = self._size + second_da.length()
+        # new_capacity = self._capacity
+        while self._capacity < new_size:
+            self._capacity *= 2
+        # new_arr = StaticArray(new_capacity)
+        new_cap = self._capacity
+        second_idx = 0
+        for idx in range(new_size):
+            if idx >= self._size:
+                self._size += 1
+                self._data[idx] = second_da[second_idx]
+                second_idx += 1
+        #     else:
+        #         new_arr[idx] = self._data[idx]
+        # self._data = new_arr
 
     def map(self, map_func) -> "DynamicArray":
         """
@@ -374,23 +390,23 @@ if __name__ == "__main__":
     # da_slice.remove_at_index(0)
     # print(da, da_slice, sep="\n")
     # #
-    print("\n# slice example 2")
-    da = DynamicArray([10, 11, 12, 13, 14, 15, 16])
-    print("SOURCE:", da)
-    slices = [(0, 7), (-1, 7), (0, 8), (2, 3), (5, 0), (5, 3), (6, 1), (6, -1)]
-    for i, cnt in slices:
-        print("Slice", i, "/", cnt, end="")
-        try:
-            print(" --- OK: ", da.slice(i, cnt))
-        except:
-            print(" --- exception occurred.")
+    # print("\n# slice example 2")
+    # da = DynamicArray([10, 11, 12, 13, 14, 15, 16])
+    # print("SOURCE:", da)
+    # slices = [(0, 7), (-1, 7), (0, 8), (2, 3), (5, 0), (5, 3), (6, 1), (6, -1)]
+    # for i, cnt in slices:
+    #     print("Slice", i, "/", cnt, end="")
+    #     try:
+    #         print(" --- OK: ", da.slice(i, cnt))
+    #     except:
+    #         print(" --- exception occurred.")
     #
-    # print("\n# merge example 1")
-    # da = DynamicArray([1, 2, 3, 4, 5])
-    # da2 = DynamicArray([10, 11, 12, 13])
-    # print(da)
-    # da.merge(da2)
-    # print(da)
+    print("\n# merge example 1")
+    da = DynamicArray([1, 2, 3, 4, 5])
+    da2 = DynamicArray([10, 11, 12, 13])
+    print(da)
+    da.merge(da2)
+    print(da)
     #
     # print("\n# merge example 2")
     # da = DynamicArray([1, 2, 3])
