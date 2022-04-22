@@ -227,7 +227,8 @@ class DynamicArray:
 
     def map(self, map_func) -> "DynamicArray":
         """
-        TODO: Write this implementation
+        Maps each value of the array to the map_func that is taken in as a parameter
+        and creates a new Dynamic Array with the new values.
         """
         new_da = DynamicArray()
         for idx in range(self._size):
@@ -237,7 +238,8 @@ class DynamicArray:
 
     def filter(self, filter_func) -> "DynamicArray":
         """
-        TODO: Write this implementation
+        Creates a new Dynamic Array containing the values in the range provided in
+        the filter_func that is taken in as a parameter.
         """
         new_da = DynamicArray()
         for idx in range(self._size):
@@ -250,20 +252,66 @@ class DynamicArray:
         """
         TODO: Write this implementation
         """
-        pass
+        result = self._data[0]
+        if initializer is None and self._size == 0:
+            return None
+        elif initializer is not None and self._size == 0:
+            return initializer
+
+        if initializer is not None:
+            for idx in range(self._size):
+                if idx == 0:
+                    result = reduce_func(initializer, self._data[idx])
+
+                else:
+                    result = reduce_func(result, self._data[idx])
+        else:
+            for idx in range(self._size - 1):
+                result = reduce_func(result, self._data[idx + 1])
+
+        return result
 
 
 def find_mode(arr: DynamicArray) -> (DynamicArray, int):
     """
     TODO: Write this implementation
     """
-    pass
+    new_da = DynamicArray()
+    count = 1
+    record_count = 1
 
+    if arr.length() > 1:
+        for idx in range(arr.length() - 1):
+
+            if arr[idx] == arr[idx + 1]:
+                count += 1
+                if count >= record_count:
+                    record_count = count
+            else:
+                count = 1
+
+        count = 1
+        if record_count == 1:
+            for idx in range(arr.length()):
+                new_da.append(arr[idx])
+        else:
+            for idx in range(arr.length() - 1):
+                if arr[idx] == arr[idx + 1]:
+                    count += 1
+                    if count == record_count:
+                        new_da.append(arr[idx])
+                else:
+                    count = 1
+    else:
+        new_da.append(arr[0])
+
+    mode_tup = (new_da, record_count)
+    return mode_tup
 
 # ------------------- BASIC TESTING -----------------------------------------
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
     # print("\n# resize - example 1")
     # da = DynamicArray()
@@ -482,21 +530,23 @@ def find_mode(arr: DynamicArray) -> (DynamicArray, int):
     # for length in [3, 4, 7]:
     #     print(da.filter(lambda word: is_long_word(word, length)))
     #
-    # print("\n# reduce example 1")
-    # values = [100, 5, 10, 15, 20, 25]
-    # da = DynamicArray(values)
-    # print(da)
-    # print(da.reduce(lambda x, y: (x // 5 + y ** 2)))
-    # print(da.reduce(lambda x, y: (x + y ** 2), -1))
-    #
-    # print("\n# reduce example 2")
-    # da = DynamicArray([100])
-    # print(da.reduce(lambda x, y: x + y ** 2))
-    # print(da.reduce(lambda x, y: x + y ** 2, -1))
-    # da.remove_at_index(0)
-    # print(da.reduce(lambda x, y: x + y ** 2))
-    # print(da.reduce(lambda x, y: x + y ** 2, -1))
-    #
+    print("\n# reduce example 1")
+    values = [100, 5, 10, 15, 20, 25]
+    da = DynamicArray(values)
+    print(da)
+    print(da.reduce(lambda x, y: (x // 5 + y ** 2)))
+    print(da.reduce(lambda x, y: (x + y ** 2), -1))
+    da1 = DynamicArray()
+    print(da1)
+
+    print("\n# reduce example 2")
+    da = DynamicArray([100])
+    print(da.reduce(lambda x, y: x + y ** 2))
+    print(da.reduce(lambda x, y: x + y ** 2, -1))
+    da.remove_at_index(0)
+    print(da.reduce(lambda x, y: x + y ** 2))
+    print(da.reduce(lambda x, y: x + y ** 2, -1))
+
     # print("\n# find_mode - example 1")
     # test_cases = (
     #     [1, 1, 2, 3, 3, 4],
