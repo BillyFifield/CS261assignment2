@@ -189,7 +189,7 @@ class DynamicArray:
 
     def slice(self, start_index: int, size: int) -> "DynamicArray":
         """
-        Creates a new Dynamic Array using the data starting at the start_index for
+        Creates and returns a new Dynamic Array using the data starting at the start_index for
         the length of the entered size.
         """
         if (start_index < 0) or (start_index > (self._size - 1)) or ((start_index + size) > self._size) or (size < 0):
@@ -228,7 +228,7 @@ class DynamicArray:
     def map(self, map_func) -> "DynamicArray":
         """
         Maps each value of the array to the map_func that is taken in as a parameter
-        and creates a new Dynamic Array with the new values.
+        and creates and returns a new Dynamic Array with the new values.
         """
         new_da = DynamicArray()
         for idx in range(self._size):
@@ -238,7 +238,7 @@ class DynamicArray:
 
     def filter(self, filter_func) -> "DynamicArray":
         """
-        Creates a new Dynamic Array containing the values in the range provided in
+        Creates and returns a new Dynamic Array containing the values in the range provided in
         the filter_func that is taken in as a parameter.
         """
         new_da = DynamicArray()
@@ -250,7 +250,8 @@ class DynamicArray:
 
     def reduce(self, reduce_func, initializer=None) -> object:
         """
-        TODO: Write this implementation
+        A reducer method that takes a reduce function and an optional initializer as parameters
+        and reduces the Dynamic Array using the provided function.
         """
         result = self._data[0]
         if initializer is None and self._size == 0:
@@ -274,7 +275,8 @@ class DynamicArray:
 
 def find_mode(arr: DynamicArray) -> (DynamicArray, int):
     """
-    TODO: Write this implementation
+    A method that finds the mode of a Dynamic Array and returns a tuple containing
+    the mode(s) and the frequency of the mode as well.
     """
     new_da = DynamicArray()
     count = 1
@@ -311,7 +313,7 @@ def find_mode(arr: DynamicArray) -> (DynamicArray, int):
 # ------------------- BASIC TESTING -----------------------------------------
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
     # print("\n# resize - example 1")
     # da = DynamicArray()
@@ -530,22 +532,22 @@ if __name__ == "__main__":
     # for length in [3, 4, 7]:
     #     print(da.filter(lambda word: is_long_word(word, length)))
     #
-    print("\n# reduce example 1")
-    values = [100, 5, 10, 15, 20, 25]
-    da = DynamicArray(values)
-    print(da)
-    print(da.reduce(lambda x, y: (x // 5 + y ** 2)))
-    print(da.reduce(lambda x, y: (x + y ** 2), -1))
-    da1 = DynamicArray()
-    print(da1)
-
-    print("\n# reduce example 2")
-    da = DynamicArray([100])
-    print(da.reduce(lambda x, y: x + y ** 2))
-    print(da.reduce(lambda x, y: x + y ** 2, -1))
-    da.remove_at_index(0)
-    print(da.reduce(lambda x, y: x + y ** 2))
-    print(da.reduce(lambda x, y: x + y ** 2, -1))
+    # print("\n# reduce example 1")
+    # values = [100, 5, 10, 15, 20, 25]
+    # da = DynamicArray(values)
+    # print(da)
+    # print(da.reduce(lambda x, y: (x // 5 + y ** 2)))
+    # print(da.reduce(lambda x, y: (x + y ** 2), -1))
+    # da1 = DynamicArray()
+    # print(da1)
+    #
+    # print("\n# reduce example 2")
+    # da = DynamicArray([100])
+    # print(da.reduce(lambda x, y: x + y ** 2))
+    # print(da.reduce(lambda x, y: x + y ** 2, -1))
+    # da.remove_at_index(0)
+    # print(da.reduce(lambda x, y: x + y ** 2))
+    # print(da.reduce(lambda x, y: x + y ** 2, -1))
 
     # print("\n# find_mode - example 1")
     # test_cases = (
