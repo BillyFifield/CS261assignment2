@@ -47,7 +47,6 @@ class Bag:
         Add a value to the bag.
         """
         self._da.append(value)
-        # self._da.set_at_index(self.size(), value)
 
 
     def remove(self, value: object) -> bool:
@@ -82,25 +81,48 @@ class Bag:
         """
         TODO: Write this implementation
         """
-        if self.size() != second_bag.size():
-            return False
+        second_da = DynamicArray(second_bag)
 
-        check = False
+        if self._da.length() != second_da.length():
+            return False
+        if self._da.is_empty() == True and second_da.is_empty() == True:
+            return True
+
         for idx in range(self.size()):
-            check = False
-            for next_idx in range(second_bag.size()):
-                if second_bag.get_at_index(next_idx) == self._da.get_at_index(idx):
-                    check = True
-            if check == False:
+            if self.count(self._da[idx]) != second_bag.count(self._da[idx]):
                 return False
 
         for idx in range(second_bag.size()):
-            check = False
-            for next_idx in range(self.size()):
-                if self._da.get_at_index(next_idx) == second_bag.get_at_index(idx):
-                    check = True
-            if check == False:
+            if second_bag.count(second_da[idx]) != self.count(second_da[idx]):
                 return False
+
+        #
+        # second_arr_check = second_da
+        # second_count = 0
+        # check = False
+        # for idx in range(self._da.length()):
+        #     check = False
+        #     for next_idx in range(second_da.length()):
+        #         if second_da[next_idx] == self._da[idx]:
+        #             second_arr_check.remove_at_index(next_idx - second_count)
+        #             second_count += 1
+        #             check = True
+        #
+        #     if check == False or second_arr_check.length() != 0:
+        #         return False
+        #
+        # first_arr_check = self._da
+        # first_count = 0
+        # for idx in range(second_da.length()):
+        #     check = False
+        #     for next_idx in range(self._da.length()):
+        #         if self._da[next_idx] == second_da[idx]:
+        #             first_arr_check.remove_at_index(next_idx - first_count)
+        #             first_count += 1
+        #             check = True
+        #     if check == False or first_arr_check.length() != 0:
+        #         return False
+
 
         return True
 
@@ -130,6 +152,7 @@ class Bag:
 if __name__ == "__main__":
 
     # print("\n# add example 1")
+    #
     # bag = Bag()
     # print(bag)
     # values = [10, 20, 30, 10, 20, 30]
@@ -156,10 +179,13 @@ if __name__ == "__main__":
     # bag.clear()
     # print(bag)
 
+
     print("\n# equal example 1")
     bag1 = Bag([10, 20, 30, 40, 50, 60])
     bag2 = Bag([60, 50, 40, 30, 20, 10])
     bag3 = Bag([10, 20, 30, 40, 50])
+    bag4 = Bag([1,2,2])
+    bag5 = Bag([2,1,2])
     bag_empty = Bag()
     #
     print(bag1, bag2, bag3, bag_empty, sep="\n")
@@ -173,6 +199,8 @@ if __name__ == "__main__":
     bag1 = Bag([100, 200, 300, 200])
     bag2 = Bag([100, 200, 30, 100])
     print(bag1.equal(bag2))
+    print(bag4.equal(bag5))
+    print(bag5.equal(bag4))
 
     # print("\n# __iter__(), __next__() example 1")
     # bag = Bag([5, 4, -8, 7, 10])

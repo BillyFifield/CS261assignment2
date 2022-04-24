@@ -3,7 +3,7 @@
 # Course: CS261 - Data Structures
 # Assignment: Assignment 2
 # Due Date: 4/25/2022
-# Description:
+# Description: A Dynamic Array assignment with methods for each part of the array.
 
 
 from static_array import StaticArray
@@ -112,22 +112,33 @@ class DynamicArray:
 
     def resize(self, new_capacity: int) -> None:
         """
-        Set the new capacity for the array.
+        Set the new capacity for the array by creating a new arr with the new capacity
+        and then setting the original arr equal to the new.
+        :param: new_capacity - the new capacity for the new arr
+        :return: None
         """
         if (new_capacity < 1) or (new_capacity < self._size):
             return
 
+        # Create a new array using the new capacity.
         new_arr = StaticArray(new_capacity)
         for idx in range(self._size):
             new_arr[idx] = self._data[idx]
+
+        # Set the original capcity equal to the new and the original arr equal to the new.
         self._capacity = new_capacity
         self._data = new_arr
 
 
     def append(self, value: object) -> None:
         """
-        Add an object to the end of the array.
+        Add an object to the end of the array. If the capacity will increase, then do the same steps
+        from the resize function. Otherwise, set the value as the new last index.
+        :param: value - the new value to be added to the arr
+        :return: None
         """
+
+        # Check to see if the capacity will need to increase
         if self._size == self._capacity:
             new_capacity = self._capacity * 2
             new_arr = StaticArray(new_capacity)
@@ -136,16 +147,25 @@ class DynamicArray:
             self._capacity = new_capacity
             self._data = new_arr
 
+        # Add the value to the array
         self._data[self._size] = value
         self._size += 1
 
     def insert_at_index(self, index: int, value: object) -> None:
         """
         Insert a value at a given index and increase the size of the array by 1.
+        If the capacity needs to increase, a new array will be created with the new capacity
+        before adding the value at the given index.
+        :param: index - the index to add the value
+        :param: value - the value to be added at the given index
+        :return: None
         """
+
+        # Validate the given index
         if (index < 0) or (index > self._size):
             raise DynamicArrayException
 
+        # Check to see if the capacity needs to be increased.
         if self._size == self._capacity:
             new_capacity = self._capacity * 2
             new_arr = StaticArray(new_capacity)
@@ -153,8 +173,12 @@ class DynamicArray:
                 new_arr[idx] = self._data[idx]
             self._capacity = new_capacity
             self._data = new_arr
+
         temp = ''
         self._size += 1
+
+        # Iterate through the array until the index equals the given index and then
+        # shift the array over and insert the new value.
         for idx in range(self._size):
             if self._size == 1:
                 self._data[idx] = value
@@ -172,16 +196,24 @@ class DynamicArray:
     def remove_at_index(self, index: int) -> None:
         """
         Remove a value at a certain index and decrease the size of the array by 1.
+        The capacity will be adjusted once the value is removed. The capacity will not
+        fall below 10.
+        :param: index - the index to remove a certain value
+        :return: None
         """
+        # Validate the given index
         if (index < 0) or (index > (self._size - 1)):
             raise DynamicArrayException
 
+        # Check to decrease the capacity.
         if (self._capacity > 10) and (self._capacity / 4 > self._size):
             if self._size <= 5:
                 self._capacity = 10
             else:
                 self._capacity = self._size * 2
 
+        # Remove the value at the index and shift the array over to erase the
+        # previous value at the index.
         for idx in range(self._size - 1):
             if idx >= index:
                 self._data[idx] = self._data[idx + 1]
@@ -191,12 +223,19 @@ class DynamicArray:
         """
         Creates and returns a new Dynamic Array using the data starting at the start_index for
         the length of the entered size.
+        :param: start_index - the start of the index where the new array will begin.
+        :param: size - the size of the new array.
+        :return: new_DA - the new Dynamic Array
         """
+        # validate the starting index and size
         if (start_index < 0) or (start_index > (self._size - 1)) or ((start_index + size) > self._size) or (size < 0):
             raise DynamicArrayException
         new_DA = DynamicArray()
         idx = 0
         new_idx = 0
+
+        # Iterate through the array until the starting index is met and then add the values
+        # to the new array for the entered size.
         for idx in range(start_index + size):
             if idx >= start_index:
                 new_DA.append(self._data[idx])
@@ -206,15 +245,23 @@ class DynamicArray:
     def merge(self, second_da: "DynamicArray") -> None:
         """
         Merges two arrives by adding second_da to the end of the original array.
+        Create a new capacity if necessary.
+        :param: second_da - the array to be added to the end of the original array.
+        :return: None
         """
 
         new_size = self._size + second_da.length()
         new_capacity = self._capacity
+
+        # Increase the new capacity size
         while new_capacity < new_size:
             new_capacity *= 2
         new_arr = StaticArray(new_capacity)
         new_cap = self._capacity
         second_idx = 0
+
+        # Add the new array to the end of the old array once the index reaches
+        # the size of the old array.
         for idx in range(new_size):
             if idx >= self._size:
                 self._size += 1
@@ -222,6 +269,8 @@ class DynamicArray:
                 second_idx += 1
             else:
                 new_arr[idx] = self._data[idx]
+
+        # Set the capacity and original array equal to the new capacity and new array.
         self._capacity = new_capacity
         self._data = new_arr
 
@@ -229,8 +278,11 @@ class DynamicArray:
         """
         Maps each value of the array to the map_func that is taken in as a parameter
         and creates and returns a new Dynamic Array with the new values.
+        :param: map_func - the function to run each value of the array through.
+        :return: new_da the new Dynamic Array created from the values from the map_func function.
         """
         new_da = DynamicArray()
+        # Run each value of the array through the map_func and add the value to a Dynamic Array.
         for idx in range(self._size):
             new_da.append(map_func(self._data[idx]))
 
@@ -240,6 +292,9 @@ class DynamicArray:
         """
         Creates and returns a new Dynamic Array containing the values in the range provided in
         the filter_func that is taken in as a parameter.
+        :param: filter_func - the function containing the range of the new array.
+        :return: new_da - a new Dynamic Array containing the new values from the original
+                array within the range of the filter_func.
         """
         new_da = DynamicArray()
         for idx in range(self._size):
@@ -252,6 +307,9 @@ class DynamicArray:
         """
         A reducer method that takes a reduce function and an optional initializer as parameters
         and reduces the Dynamic Array using the provided function.
+        :param: reduce_func - the reducer function the array will be passed through.
+        :param: initializer - an optional initializer to include within reduce_func
+        :return: result - An integer after passing the array through the function.
         """
         result = self._data[0]
         if initializer is None and self._size == 0:
@@ -277,14 +335,17 @@ def find_mode(arr: DynamicArray) -> (DynamicArray, int):
     """
     A method that finds the mode of a Dynamic Array and returns a tuple containing
     the mode(s) and the frequency of the mode as well.
+    :param: arr - a Dynamic Array
+    :return: mode_tup - a tuple containing a dynamic array of the mode(s) and also
+            the freqency of the mode(s).
     """
     new_da = DynamicArray()
     count = 1
     record_count = 1
 
     if arr.length() > 1:
+        # Find the frequency of the mode.
         for idx in range(arr.length() - 1):
-
             if arr[idx] == arr[idx + 1]:
                 count += 1
                 if count >= record_count:
@@ -293,9 +354,15 @@ def find_mode(arr: DynamicArray) -> (DynamicArray, int):
                 count = 1
 
         count = 1
+
+        # If the frequency of the mode is 1, then every element in the array will be added
+        # to the new array since every value is the mode.
         if record_count == 1:
             for idx in range(arr.length()):
                 new_da.append(arr[idx])
+
+        # Use the frequency to find out if a value is repeated the same amount as the frequency
+        # of the mode. This value will then be added to a new Dynamic Array.
         else:
             for idx in range(arr.length() - 1):
                 if arr[idx] == arr[idx + 1]:
