@@ -1,9 +1,10 @@
-# Name:
-# OSU Email:
+# Name: Billy Fifield
+# OSU Email: fifieldb@oregonstate.edu
 # Course: CS261 - Data Structures
-# Assignment:
-# Due Date:
-# Description:
+# Assignment: Assignment 2
+# Due Date: 4/25/2022
+# Description: A bag Dynamic Array and methods to get multiple aspects of the bag
+#              including add, remove, count, clear, equal, __iter__, and __next__
 
 
 from dynamic_array import *
@@ -44,16 +45,23 @@ class Bag:
 
     def add(self, value: object) -> None:
         """
-        Add a value to the bag.
+        Takes a value as a parameter and adds it to the bag.
+        :param: value - the value to be added
+        :return: None
         """
+        # Call the append method in the Dynamic Array class to add it to the bag.
         self._da.append(value)
-
 
     def remove(self, value: object) -> bool:
         """
         Removes a single value taken as parameter from the Dynamic Array. If the value
-        is remove, it returns True. Otherwise, it returns False.
+        is removed, it returns True. Otherwise, it returns False.
+        :param: value - the value to be removed from the bag.
+        :return: a bool: True - if the value is removed from the bag, otherwise returns False.
         """
+
+        # Search for the value in the bag and then call the remove_at_index method
+        # in the Dynamic Array class to remove it.
         for idx in range(self.size()):
             if self._da.get_at_index(idx) == value:
                 self._da.remove_at_index(idx)
@@ -64,8 +72,13 @@ class Bag:
         """
         Takes a value as a parameter and returns the count of the number of times
         the value is in the Dynamic Array.
+        :param: value - the value to search through the bag to see how many times the value
+                    is in the bag.
+        :return: count - the frequency of which the value is in the bag.
         """
         count = 0
+
+        # Search for the value in the bag and increment count each time it is found.
         for idx in range(self.size()):
             if self._da.get_at_index(idx) == value:
                 count += 1
@@ -74,68 +87,44 @@ class Bag:
     def clear(self) -> None:
         """
         Clears the bag of all values in the Dynamic Array.
+        :return: None
         """
         self._da = DynamicArray()
 
     def equal(self, second_bag: "Bag") -> bool:
         """
-        TODO: Write this implementation
+        Compares two bags and checks to see if both bags are equal.
+        :param: second_bag - the second bag that the initial bag will be compared with.
+        :return: a bool that is True if the bags are equal or False if they are not equal.
         """
         second_da = DynamicArray(second_bag)
 
+        # Check to see if both bags have the same length
         if self._da.length() != second_da.length():
             return False
+
+        # Check to see if both bags are empty
         if self._da.is_empty() == True and second_da.is_empty() == True:
             return True
 
+        # Check to see if the count of each value in the first bag is the same as the second bag.
+        # Since they are of the same length, this will apply for vice-versa as well.
         for idx in range(self.size()):
             if self.count(self._da[idx]) != second_bag.count(self._da[idx]):
                 return False
-
-        for idx in range(second_bag.size()):
-            if second_bag.count(second_da[idx]) != self.count(second_da[idx]):
-                return False
-
-        #
-        # second_arr_check = second_da
-        # second_count = 0
-        # check = False
-        # for idx in range(self._da.length()):
-        #     check = False
-        #     for next_idx in range(second_da.length()):
-        #         if second_da[next_idx] == self._da[idx]:
-        #             second_arr_check.remove_at_index(next_idx - second_count)
-        #             second_count += 1
-        #             check = True
-        #
-        #     if check == False or second_arr_check.length() != 0:
-        #         return False
-        #
-        # first_arr_check = self._da
-        # first_count = 0
-        # for idx in range(second_da.length()):
-        #     check = False
-        #     for next_idx in range(self._da.length()):
-        #         if self._da[next_idx] == second_da[idx]:
-        #             first_arr_check.remove_at_index(next_idx - first_count)
-        #             first_count += 1
-        #             check = True
-        #     if check == False or first_arr_check.length() != 0:
-        #         return False
-
 
         return True
 
     def __iter__(self):
         """
-        Creates and initializes a iterator.
+        Creates and initializes a iterator to iterate through the bag.
         """
         self._index = 0
         return self
 
     def __next__(self):
         """
-        Returns the next value in the array from the interator pointer.
+        Returns the next value in the array from the iterator pointer.
         """
         try:
             value = self._da[self._index]
@@ -149,7 +138,7 @@ class Bag:
 # ------------------- BASIC TESTING -----------------------------------------
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
     # print("\n# add example 1")
     #
@@ -179,28 +168,28 @@ if __name__ == "__main__":
     # bag.clear()
     # print(bag)
 
-
-    print("\n# equal example 1")
-    bag1 = Bag([10, 20, 30, 40, 50, 60])
-    bag2 = Bag([60, 50, 40, 30, 20, 10])
-    bag3 = Bag([10, 20, 30, 40, 50])
-    bag4 = Bag([1,2,2])
-    bag5 = Bag([2,1,2])
-    bag_empty = Bag()
     #
-    print(bag1, bag2, bag3, bag_empty, sep="\n")
-    print(bag1.equal(bag2), bag2.equal(bag1))
-    print(bag1.equal(bag3), bag3.equal(bag1))
-    print(bag2.equal(bag3), bag3.equal(bag2))
-    print(bag1.equal(bag_empty), bag_empty.equal(bag1))
-    print(bag_empty.equal(bag_empty))
-    print(bag1, bag2, bag3, bag_empty, sep="\n")
-
-    bag1 = Bag([100, 200, 300, 200])
-    bag2 = Bag([100, 200, 30, 100])
-    print(bag1.equal(bag2))
-    print(bag4.equal(bag5))
-    print(bag5.equal(bag4))
+    # print("\n# equal example 1")
+    # bag1 = Bag([10, 20, 30, 40, 50, 60])
+    # bag2 = Bag([60, 50, 40, 30, 20, 10])
+    # bag3 = Bag([10, 20, 30, 40, 50])
+    # bag4 = Bag([1,2,2])
+    # bag5 = Bag([2,1,2])
+    # bag_empty = Bag()
+    # #
+    # print(bag1, bag2, bag3, bag_empty, sep="\n")
+    # print(bag1.equal(bag2), bag2.equal(bag1))
+    # print(bag1.equal(bag3), bag3.equal(bag1))
+    # print(bag2.equal(bag3), bag3.equal(bag2))
+    # print(bag1.equal(bag_empty), bag_empty.equal(bag1))
+    # print(bag_empty.equal(bag_empty))
+    # print(bag1, bag2, bag3, bag_empty, sep="\n")
+    #
+    # bag1 = Bag([100, 200, 300, 200])
+    # bag2 = Bag([100, 200, 30, 100])
+    # print(bag1.equal(bag2))
+    # print(bag4.equal(bag5))
+    # print(bag5.equal(bag4))
 
     # print("\n# __iter__(), __next__() example 1")
     # bag = Bag([5, 4, -8, 7, 10])

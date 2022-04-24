@@ -3,7 +3,9 @@
 # Course: CS261 - Data Structures
 # Assignment: Assignment 2
 # Due Date: 4/25/2022
-# Description: A Dynamic Array assignment with methods for each part of the array.
+# Description: A Dynamic Array assignment with methods for each part of the array
+#              including resize, append, insert_at_index, remove_at_index, slice,
+#              merge, map, filter, reduce, and find_mode.
 
 
 from static_array import StaticArray
